@@ -132,8 +132,10 @@ public class Maven32Main
             System.out.println( "use inet address " + hostname );
             s = new Socket(hostname,tcpPort);
         }
-        else
-            s = new Socket((String)null,tcpPort);
+        else {
+			String address = System.getenv("JENKINS_MAVEN_AGENT_ADDRESS");
+			s = new Socket(address, tcpPort);
+		}
 
         Class remotingLauncher = remoting.loadClass("hudson.remoting.Launcher");
         remotingLauncher.getMethod("main",
